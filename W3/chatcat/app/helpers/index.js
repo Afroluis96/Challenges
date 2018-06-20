@@ -1,5 +1,6 @@
 'use strict';
 const router = require('express').Router();
+const db = require('../db');
 
 
 //Iterate through the routes object and mount the routes
@@ -25,6 +26,60 @@ let route = routes =>{
     return router;
 }
 
+//Find a single user based on a key
+let findOne = profileID => {
+    return db.userModel.findOne({
+        'profileId':profileID
+    })
+}
+
+//crcate a new user and returns that instance
+let createNewUser = profile =>{
+    return new Promise((resolve,reject) =>{
+        let newChatUser = new db.userModel({
+            profileId: profile.id,
+            fullName: profile.displayName,
+            profilePic: profile.photos[0].value || ''
+        });
+        newChatUser.save(error=>{
+            if(error){
+               // console.log('CReate New user Error');
+                reject(error);
+            }else{
+                resolve(newChatUser);
+            }
+        })
+    });
+}
+
+//The ES6 promisified version of findById
+let findById = id =>{
+    return new Promise((resolve, reject)=>{
+        db.userModel.findById(id,(error, user)=>{
+            if(error){
+                reject(error);
+            }else{
+                resolve(user);
+            }
+        });
+    });
+}
+
+//A middleware that checjs to see if the user is authenticated & logged in
+
+let isAuthenticated =(req, res, next)=>{
+    if(req.isAuthenticated()){
+        next();
+    }else{
+        res.redirect('/');
+    }
+}
+
 module.exports = {
-    route 
+    route,
+    findOne,
+    createNewUser,
+    findById,
+    isAuthenticated
+
 }

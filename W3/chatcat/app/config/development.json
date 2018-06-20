@@ -1,5 +1,18 @@
 {
     "host": "http://localhost:3000",
-    "dbURI": "mongodb://chatcatuser:laparicio123@ds163630.mlab.com:63630/mychatcatdb_laparicio"
-
+    "dbURI": "mongodb://chatcatuser:laparicio123@ds163630.mlab.com:63630/mychatcatdb_laparicio",
+    "sessionSecret":"catscanfly",
+    "fb":{
+        "clientID":"477797735983812",
+        "clientSecret": "15c883a7b4e2af25cb54ece33d2e6478",
+        "callbackURL":"//localhost:3000/auth/facebook/callback",
+        "profileFields" : ["id","displayName","photos"]
+    },
+    "twitter":{
+        "consumerKey":"sp3qy8ldekkQm6c90OS78JcCn",
+        "consumerSecret":"1qyX6OfbVLERPto9qLNDwwNa8Lhf5NrZ4wJkEX0SSkBYvGFJcQ",
+        "callbackURL":"//localhost:3000/auth/twitter/callback",
+        "profileFields": ["id", "displayName","photos"]
+    }
+    
 }
