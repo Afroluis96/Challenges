@@ -93,7 +93,20 @@ const favorite = (req,res) =>{
 }
 
 const usersFavorites = (req, res) =>{
+        
+    if(!req.body || req.body.length === 0){
+        console.log('request body not found');
+        return res.sendStatus(400);
+    }
+  
+    var pa = req.url;
+    var final_params = pa.split('/');
+    var id_user = Number(final_params[2]);
 
+    movies.belongsToMany(users,{as:'Movie',through:'FavoriteMovie',foreignKey:'id_movie'});
+    users.belongsToMany(movies,{as:'User',through:'FavoriteMovie',foreignKey:'id_user'});
+
+    console.log(id_user);
 }
 
 module.exports = (app) =>{
