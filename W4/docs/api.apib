@@ -1,0 +1,36 @@
+FORMAT: 1A
+
+# Products
+
+Products is a simple API allowing users to manage the storing and inventory of products.
+
+# Group Posts
+
+## Posts Collection [/posts]
+
+### Get All Posts [GET/posts]
++Response 200 (application/json)
+    + Attributes
+        -posts(array[Post])
+            
+
+### Get Individual Blog Posts [GET/posts/{id}]
++ Parameter 
+    + id: `1` - The ID of the post
+
++ Response 200 (application/json)
+    + Attributes
+        - Include Post
+        - comments (array[Comment])
+
+
+# Data structure 
+
+## Post (object)
+-id: `1` (number) - The ID of the post
+-title: `My awesome blog post` (string) - The title of the Post
+-content: `Lorem Ipsum` (string) - The content of the post
+## Comment (object)
+-id: `1` (number) - The ID of comment
+-content: `Lorem Ipsum` (string) - The content of the comment
+-author: `Skater Dev` (string) -Name of the post author
