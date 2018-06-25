@@ -93,6 +93,9 @@ const favorite = (req,res) =>{
 }
 
 
+//movies.belongsToMany(users,{as:'Movie',through:'FavoriteMovie',foreignKey:'id_movie'});
+//users.belongsToMany(movies,{as:'User',through:'FavoriteMovie',foreignKey:'id_user'});
+
 const usersFavorites = (req, res) =>{
         
     if(!req.body || req.body.length === 0){
@@ -101,7 +104,9 @@ const usersFavorites = (req, res) =>{
     }
   
     var pa = req.url;
-    var idUser = Number(pa.split('/')[2]);
+    var final_params = pa.split('/');
+    var idUser = Number(final_params[2]);  
+
     
     favorites.findAll({
         where:{
@@ -156,7 +161,7 @@ const usersFavorites = (req, res) =>{
 module.exports = (app) =>{
   
 
-    app.post(/\/movies\/\d\/favorite$/,favorite);
+    app.post(/\/movies\/\d\/fav$/,favorite);
 
     app.get(/\/users\/\d\/movies\/favorites$/,usersFavorites);
 }
