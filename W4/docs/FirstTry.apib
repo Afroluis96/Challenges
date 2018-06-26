@@ -6,42 +6,202 @@ Products is a simple API allowing users to manage the storing and inventory of p
 
 # Group Products
 
-## Products collection [/products]
+## Products Collection [/products]
 
-### Get All Products [GET/products]
-+ Response 200 (application/json)
-    + Attributes
-        products(array[Product])
-
-
-### Get individual product [GET/products/{id}]
+### Get All Products [GET/products{?limit}]
 + Parameters
-    + id: `1` - The id of the product
-
+    + limit: `1` (number, optional) - Maximum number of products per page
+        + Default 10
 + Response 200 (application/json)
     + Attributes
-        + include Product
+        - products(array[Product])
+
++ Response 400 (application/json)
+    + Attributes (Error)
 
 
-### Get products by name [GET/products{?filter}]
+### Get Individual Product [GET/products/{id}]
 + Parameters
-    + filter: `string` - The name of a product
+    + id: `1` (number,required) - The id of the product
 
 + Response 200 (application/json)
     + Attributes
-        + include Product
+        - include Product
+
++ Response 400 (application/json)
+    + Attributes (Error)
 
 
-### Get products sort b y name [GET/products{order}]
+### Get Products Sort by Name or Popularity [GET/products{?sort,limit}]
++ Parameters
+    + sort: (enum[string]) - The name of a product
+        + Members
+            + `+name`
+            + `+popularity`
+            + `-name`
+            + `-popularity`
+
+    + limit: (number,optional) - Maximum number of products per page
+
++ Response 200 (application/json)
+    + Attributes
+        - products(array[Product])
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
+
+### Get Product by Name [GET/products{?name}]
++ Parameters
+    + name: (string,optional) - Name of a product
+
++ Response 200 (application/json)
+    + Attributes
+        - include Product
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
+
+## Products actions [/products]
+
+
+### Add a Product [POST/products]
++ Request
+    + Attributes (Create)
+
++ Response 200 (application/json)
+    + Attributes
+        - include Product
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
++ Response 401 (application/json)
+    + Attributes (Error)
+
++ Response 403 (application/json)
+    + Attributes (Error)
+
+
+### Delete a Product [DELETE/products/{id}]
++ Parameters
+    + id: `1` (number,required) - The id of the product
+
++ Response 204 (application/json)
+    + Attributes (Error)
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
++ Response 401 (application/json)
+    + Attributes (Error)
+
++ Response 403 (application/json)
+    + Attributes (Error)
+
++ Response 404 (application/json)
+    + Attributes (Error)
+
+
+### Like a Product [POST/products/{id}/like]
++ Parameters
+    + id: `1` (number,required) - The id of the product
+
++ Request
+    + Attributes
+        - userId: `1` (number, required) - The id of the user logged
+
++ Response 200 (application/json)
+    + Attributes
+        - include Product
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
++ Response 401 (application/json)
+    + Attributes (Error)
+
++ Response 403 (application/json)
+    + Attributes (Error)
+
++ Response 404 (application/json)
+    + Attributes (Error)
+
+
+### Buy a Product [POST/products/{id}/buy]
++ Parameters
+    + id: `1` (number,required) - The id of the product
+
++ Request
+    + Attributes
+        - userId: `1` (number, required) - The id of the user logged
+        - quantity: `1` (number, required)
+
++ Response 200 (application/json)
+    + Attributes
+        - include Product
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
++ Response 401 (application/json)
+    + Attributes (Error)
+
++ Response 403 (application/json)
+    + Attributes (Error)
+
++ Response 404 (application/json)
+    + Attributes (Error)
+
+
+### Update a Product Price [PATCH/products/{id}]
++ Parameters 
+    + id: `1` (number,required) - The id of the product
+
++ Request
+    + Attributes
+        - userId: `1` (number, required) - The id of the user logged
+        - Price: `1` (number, required)
+
++ Response 200 (application/json)
+    + Attributes
+        - include Product
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
++ Response 401 (application/json)
+    + Attributes (Error)
+
++ Response 403 (application/json)
+    + Attributes (Error)
+
++ Response 404 (application/json)
+    + Attributes (Error)
 
 
 # Data structure
 
 ## Product (object)
--id: `1` (number) - The ID of the Product
--name: `My product name` (string) - The name of the product
--stock: `1` (number) - The stock of the product
--description: `Lorem Ipsum` (string) - The content od the product description
--price: `1` (number) - How much you will pay for the product
--likes: `1` (number) - How many people have liked the product
+- id: `1` (number) - The ID of the Product
+- name: `My product name` (string) - The name of the product
+- stock: `1` (number) - The stock of the product
+- description: `Lorem Ipsum` (string) - The content od the product description
+- price: `1` (number) - How much you will pay for the product
+- likes: `1` (number) - How many people have liked the product
+
+
+## Error (object)
++ code: 400 (number) - Status code
++ message (string) - Status message
++ description (string) - Status description
+
+
+## Create (object)
+- name: `My product name` (string) - The name of the product
+- stock: `1` (number) - The stock of the product
+- description: `Lorem Ipsum` (string) - The content od the product description
+- price: `1` (number) - How much you will pay for the product
+
 
