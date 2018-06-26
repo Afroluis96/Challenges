@@ -1,0 +1,47 @@
+FORMAT: 1A
+
+# Products
+
+Products is a simple API allowing users to manage the storing and inventory of products.
+
+# Group Products
+
+## Products collection [/products]
+
+### Get All Products [GET/products]
++ Response 200 (application/json)
+    + Attributes
+        products(array[Product])
+
+
+### Get individual product [GET/products/{id}]
++ Parameters
+    + id: `1` - The id of the product
+
++ Response 200 (application/json)
+    + Attributes
+        + include Product
+
+
+### Get products by name [GET/products{?filter}]
++ Parameters
+    + filter: `string` - The name of a product
+
++ Response 200 (application/json)
+    + Attributes
+        + include Product
+
+
+### Get products sort b y name [GET/products{order}]
+
+
+# Data structure
+
+## Product (object)
+-id: `1` (number) - The ID of the Product
+-name: `My product name` (string) - The name of the product
+-stock: `1` (number) - The stock of the product
+-description: `Lorem Ipsum` (string) - The content od the product description
+-price: `1` (number) - How much you will pay for the product
+-likes: `1` (number) - How many people have liked the product
+
