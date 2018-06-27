@@ -19,13 +19,14 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users (
 userId int(11) unsigned not null auto_increment primary key,
 userName varchar(50),
+userPassword varchar (50),
 isAdmin tinyint(1) default 0
 );
 
 DROP TABLE IF EXISTS userLike;
 
-CREATE TABLE userLike(
-userLikeId int(11) unsigned not null auto_increment primary key,
+CREATE TABLE likes(
+likeId int(11) unsigned not null auto_increment primary key,
 userId int(11) unsigned,
 productId int(11) unsigned,
 FOREIGN KEY (userId) REFERENCES users(userId),
@@ -36,12 +37,11 @@ DROP TABLE IF EXISTS log;
 
 CREATE TABLE log (
 logId int(11) unsigned not null auto_increment primary key,
+quantity int default 1,
+logDate datetime default now(),
 userId int(11) unsigned,
 productId int(11) unsigned,
-quantity int default 1,
-logDate date default now(),
 FOREIGN KEY (userId) REFERENCES users(userId),
-FOREIGN KEY (productId) REFERENCES product(productid)
-
-)
+FOREIGN KEY (productId) REFERENCES products(productId)
+);
 

@@ -32,7 +32,7 @@ Products is a simple API allowing users to manage the storing and inventory of p
     + Attributes (Error)
 
 
-### Get Products Sort by Name or Popularity [GET/products{?sort,limit}]
+### Get Products Sort by Name or Popularity [GET/products{?sort,limit,page}]
 + Parameters
     + sort: (enum[string]) - The name of a product
         + Members
@@ -42,6 +42,7 @@ Products is a simple API allowing users to manage the storing and inventory of p
             + `-popularity`
 
     + limit: (number,optional) - Maximum number of products per page
+    + page: (number,optional) - Page to show
 
 + Response 200 (application/json)
     + Attributes
