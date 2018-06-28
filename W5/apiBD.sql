@@ -23,6 +23,10 @@ userPassword varchar (50),
 isAdmin tinyint(1) default 0
 );
 
+insert into users(userName,userPassword,isAdmin)
+values('Luis', '123', 1),
+      ('Alejandro', '123', 0);
+
 DROP TABLE IF EXISTS userLike;
 
 CREATE TABLE likes(
