@@ -13,13 +13,17 @@ stock int (11) default 0,
 enable tinyint(1) default 0
 );
 
+select * from products;
+select * from log;
+select * from likes;
+select * from users;
 
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
 userId int(11) unsigned not null auto_increment primary key,
 userName varchar(50),
-userPassword varchar (50),
+userPassword varchar (50),	
 isAdmin tinyint(1) default 0
 );
 
@@ -43,6 +47,7 @@ CREATE TABLE log (
 logId int(11) unsigned not null auto_increment primary key,
 quantity int default 1,
 logDate datetime default now(),
+total double,
 userId int(11) unsigned,
 productId int(11) unsigned,
 FOREIGN KEY (userId) REFERENCES users(userId),

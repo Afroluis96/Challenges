@@ -8,21 +8,11 @@ Products is a simple API allowing users to manage the storing and inventory of p
 
 ## Products Collection [/products]
 
-### Get All Products [GET/products{?limit}]
+### Get Individual Product [GET/products/{parameter}]
 + Parameters
-    + limit: `1` (number, optional) - Maximum number of products per page
-        + Default 10
-+ Response 200 (application/json)
-    + Attributes
-        - products(array[Product])
+    + parameter: (string,required) - The id or name of the product
 
-+ Response 400 (application/json)
-    + Attributes (Error)
-
-
-### Get Individual Product [GET/products/{id}]
-+ Parameters
-    + id: `1` (number,required) - The id of the product
+    You can search writing either the name or the id of the product
 
 + Response 200 (application/json)
     + Attributes
@@ -34,15 +24,19 @@ Products is a simple API allowing users to manage the storing and inventory of p
 
 ### Get Products Sort by Name or Popularity [GET/products{?sort,limit,page}]
 + Parameters
-    + sort: (enum[string]) - The name of a product
+    + sort: (enum[string]) - The way the products are goint to be sort when showing
+        + Default: `name`
+
         + Members
-            + `+name`
-            + `+popularity`
+            + `name`
+            + `popularity`
             + `-name`
             + `-popularity`
-
+        
     + limit: (number,optional) - Maximum number of products per page
+        + Default: `5`
     + page: (number,optional) - Page to show
+        + Default: `1`
 
 + Response 200 (application/json)
     + Attributes
@@ -52,22 +46,14 @@ Products is a simple API allowing users to manage the storing and inventory of p
     + Attributes (Error)
 
 
-### Get Product by Name [GET/products{?name}]
-+ Parameters
-    + name: (string,optional) - Name of a product
-
-+ Response 200 (application/json)
-    + Attributes
-        - include Product
-
-+ Response 400 (application/json)
-    + Attributes (Error)
-
-
 ## Products actions [/products]
 
 
 ### Add a Product [POST/products]
++ Headers
+    Content-Type: application/json
+    Authorization: JWT
+
 + Request
     + Attributes (Create)
 
@@ -86,6 +72,10 @@ Products is a simple API allowing users to manage the storing and inventory of p
 
 
 ### Delete a Product [DELETE/products/{id}]
++ Headers
+    Content-Type: application/json
+    Authorization: JWT
+
 + Parameters
     + id: `1` (number,required) - The id of the product
 
@@ -106,6 +96,10 @@ Products is a simple API allowing users to manage the storing and inventory of p
 
 
 ### Like a Product [POST/products/{id}/like]
++ Headers
+    Content-Type: application/json
+    Authorization: JWT
+
 + Parameters
     + id: `1` (number,required) - The id of the product
 
@@ -131,17 +125,20 @@ Products is a simple API allowing users to manage the storing and inventory of p
 
 
 ### Buy a Product [POST/products/{id}/buy]
++ Headers
+    Content-Type: application/json
+    Authorization: JWT
+    
 + Parameters
     + id: `1` (number,required) - The id of the product
 
 + Request
     + Attributes
-        - userId: `1` (number, required) - The id of the user logged
         - quantity: `1` (number, required)
 
 + Response 200 (application/json)
     + Attributes
-        - include Product
+        - include Log
 
 + Response 400 (application/json)
     + Attributes (Error)
@@ -157,12 +154,15 @@ Products is a simple API allowing users to manage the storing and inventory of p
 
 
 ### Update a Product Price [PATCH/products/{id}]
++ Headers
+    Content-Type: application/json
+    Authorization: JWT
+
 + Parameters 
     + id: `1` (number,required) - The id of the product
 
 + Request
     + Attributes
-        - userId: `1` (number, required) - The id of the user logged
         - Price: `1` (number, required)
 
 + Response 200 (application/json)
@@ -188,7 +188,6 @@ Products is a simple API allowing users to manage the storing and inventory of p
 - id: `1` (number) - The ID of the Product
 - name: `My product name` (string) - The name of the product
 - stock: `1` (number) - The stock of the product
-- description: `Lorem Ipsum` (string) - The content od the product description
 - price: `1` (number) - How much you will pay for the product
 - likes: `1` (number) - How many people have liked the product
 
@@ -202,7 +201,15 @@ Products is a simple API allowing users to manage the storing and inventory of p
 ## Create (object)
 - name: `My product name` (string) - The name of the product
 - stock: `1` (number) - The stock of the product
-- description: `Lorem Ipsum` (string) - The content od the product description
 - price: `1` (number) - How much you will pay for the product
+
+
+## Log (object)
+- id: `1` (number) - The ID of the logge
+- productId: `1` (number) - The ID of the product bought
+- userId: `1` (number) - The ID of the user that purchased the product
+- quantity: `1` (number) - The quantity purchase
+- total: `1` (number) - The total of the purchase
+- logDate: `01-01-2018` (date) - the date of the purchase
 
 
