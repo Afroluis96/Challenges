@@ -1,0 +1,2 @@
+user: cinemaUser
+pass: cinema123

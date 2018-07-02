@@ -14,7 +14,8 @@ aglio.render(blueprint, options, function (err, html, warnings) {
 });
  
 // Render a blueprint with a custom template file
-/*options = {
+/* aglio --theme-variables flatly -i api.apib -o index.html
+options = {
   themeTemplate: '/path/to/my-template.jade'
 };
 aglio.render(blueprint, options, function (err, html, warnings) {
