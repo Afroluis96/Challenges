@@ -1,0 +1,296 @@
+FORMAT: 1A
+
+# Cinemapi
+
+Cinemapi it's a api that allows you to have acces to a big movie database and then agregate them to your local database.
+Also let you have all the funcionality that a movie theather should.
+
+# Group Movies
+
+## Movies Collection [/movies]
+
+### Get Movies By proxy [GET/movies/{s}/api]
++ Parameters
+    +  s: (string,required) - The name of the movie
+
++ Response 200 (application/json)
+    + Attributes
+        - include ApiMovie
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
++ Response 401 (application/json)
+    + Attributes (Error)
+
++ Response 403 (application/json)
+    + Attributes (Error)
+
++ Response 404 (application/json)
+    + Attributes (Error)
+
+
+### Get Movies billboard [GET/movies{?from,to,page,limit,page}]
++ Parameters
+    + from: (string) - The start date to search the movies
+        + Default: `today`
+    
+    + to: (string) - The end date to search the movies
+ 
+    + limit: (number,optional) - Maximum number of products per page
+        + Default: `5`
+
+    + page: (number,optional) - Page to show
+        + Default: `1`
+
++ Response 200 (application/json)
+    + Attributes
+        - billboard(array[Movie])
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
++ Response 404 (application/json)
+    + Attributes (Error)
+
+
+### Get Movies Schedule [GET/movies/{?id,limit,page}/schedule/]
++ Parameters
+    + id: (number,required) - The id movie to search
+ 
+    + limit: (number,optional) - Maximum number of products per page
+        + Default: `5`
+
+    + page: (number,optional) - Page to show
+        + Default: `1`
+
++ Response 200 (application/json)
+    + Attributes
+        - billboard(array[Schedule])
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
++ Response 404 (application/json)
+    + Attributes (Error)
+
+
+### Add Movie through the API [POST/movies/{name}/api/add]
++ Headers
+    Content-Type: application/json
+    Authorization: JWT
+
++ Parameters
+    + name: `DeadPool` (string,required) - The name of the movie to add
+
++ Response 200 (application/json)
+    + Attributes
+        - include Movie
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
++ Response 401 (application/json)
+    + Attributes (Error)
+
++ Response 403 (application/json)
+    + Attributes (Error)
+
++ Response 404 (application/json)
+    + Attributes (Error)
+
+
+# Schedules
+
+
+## Schedules actions [/schedules]
+
+
+### Add a Schedule [POST/schedule]
++ Headers
+    Content-Type: application/json
+    Authorization: JWT
+
++ Request
+    + Attributes (CreateSchedule)
+
++ Response 200 (application/json)
+    + Attributes
+        - include Schedule
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
++ Response 401 (application/json)
+    + Attributes (Error)
+
++ Response 403 (application/json)
+    + Attributes (Error)
+
+
+### Delete a Product [DELETE/products/{id}]
++ Headers
+    Content-Type: application/json
+    Authorization: JWT
+
++ Parameters
+    + id: `1` (number,required) - The id of the product
+
++ Response 204 (application/json)
+    + Attributes (Error)
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
++ Response 401 (application/json)
+    + Attributes (Error)
+
++ Response 403 (application/json)
+    + Attributes (Error)
+
++ Response 404 (application/json)
+    + Attributes (Error)
+
+
+### Like a Product [POST/products/{id}/like]
++ Headers
+    Content-Type: application/json
+    Authorization: JWT
+
++ Parameters
+    + id: `1` (number,required) - The id of the product
+
++ Request
+    + Attributes
+        - userId: `1` (number, required) - The id of the user logged
+
++ Response 200 (application/json)
+    + Attributes
+        - include Product
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
++ Response 401 (application/json)
+    + Attributes (Error)
+
++ Response 403 (application/json)
+    + Attributes (Error)
+
++ Response 404 (application/json)
+    + Attributes (Error)
+
+
+### Buy a Product [POST/products/{id}/buy]
++ Headers
+    Content-Type: application/json
+    Authorization: JWT
+    
++ Parameters
+    + id: `1` (number,required) - The id of the product
+
++ Request
+    + Attributes
+        - quantity: `1` (number, required)
+
++ Response 200 (application/json)
+    + Attributes
+        - include Log
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
++ Response 401 (application/json)
+    + Attributes (Error)
+
++ Response 403 (application/json)
+    + Attributes (Error)
+
++ Response 404 (application/json)
+    + Attributes (Error)
+
+
+### Update a Product Price [PATCH/products/{id}]
++ Headers
+    Content-Type: application/json
+    Authorization: JWT
+
++ Parameters 
+    + id: `1` (number,required) - The id of the product
+
++ Request
+    + Attributes
+        - Price: `1` (number, required)
+
++ Response 200 (application/json)
+    + Attributes
+        - include Product
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
++ Response 401 (application/json)
+    + Attributes (Error)
+
++ Response 403 (application/json)
+    + Attributes (Error)
+
++ Response 404 (application/json)
+    + Attributes (Error)
+
+
+# Data structure
+
+## Schedule (object)
+- id: `1` (number) - The ID of the schedule
+- Initiate: `3:45:00` (string) - The hour the movies starts
+- End: `3:45:00` (string) - The hour the movie ends
+- MovieId: `1` (number) - The ID of the movie
+- Date: `01-01-2018` (string) - The date the schedule were set
+- roomId: '1' (number) - The id where the movie its gping to be playing in that schedule
+- Price: `1` (number) - In case there is a special price
+
+## Error (object)
++ code: 400 (number) - Status code
++ message (string) - Status message
++ description (string) - Status description
+
+
+## CreateSchedule (object)
+- InitialHour: `14:00:00` (string) - The hour the movie starts
+- EndHour: `16:00:00` (string) - The hour the movie ends
+- MovieId: `1` (number) - The movie to add the schedule
+- RoomId: `1` (number) - The room tht movie is going to play in
+- Price: `1` (number) - In case there is a special price
+
+
+## ApiMovie (object)
+- Title: `1` (string) - The movie title
+- Year: `1` (string) - The year the movie came
+- Rated: `1` (string) - The movie clasification 
+- Released: `01-01-2018` (string) - The date the movie was released
+- Runtime: `135` (number) - The total of minutes the movie lasts
+- Genre: `01-01-2018` (string) - the movie genre
+- Director: (string)
+- Writer: (string)
+- Actors: (string)
+- Plot: (string)
+- Language: (string)
+- Country: (string)
+- Awards:(string)
+- Poster: (string)
+- Ratings: (string)
+
+
+## Movie (object)
+- Title: `1` (string) - The movie title
+- Year: `1` (string) - The year the movie came
+- Rated: `1` (string) - The movie clasification 
+- Released: `01-01-2018` (string) - The date the movie was released
+- Runtime: `135` (number) - The total of minutes the movie lasts
+- Genre: `01-01-2018` (string) - the movie genre
+- Director: (string)
+- Writer: (string)
+- Actors: (string)
+- Plot: (string)
+- Poster: (string

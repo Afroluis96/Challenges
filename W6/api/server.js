@@ -1,15 +1,11 @@
 require('dotenv').config();
 
-const express = require("express");
-const {PORT} = process.env;
-const bodyParser = require('body-parser');
-var request = require('request');
+const { PORT } = process.env || 3000;
 
+const routes = require('./routes.js');
 
-const app = express();
-app.use(bodyParser.json());
-
-app.listen(PORT,()=>{
-    console.log("Running on port ", PORT);
-})
-
+const app = require('./app');
+routes(app);
+app.listen(PORT, () => {
+  console.log('Running in port ', PORT);
+});
