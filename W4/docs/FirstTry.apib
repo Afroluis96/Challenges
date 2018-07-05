@@ -182,6 +182,53 @@ Products is a simple API allowing users to manage the storing and inventory of p
     + Attributes (Error)
 
 
+# Users 
+
+## user actions [/users]
+
+### Add users [POST/users]
+
++ Request
+    + Attributes
+        - name: `userName` (string, required)
+        - password: `123` (string, required)
+
++ Response 200 (application/json)
+    + Attributes
+        - include User
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
++ Response 404 (application/json)
+    + Attributes (Error)
+
+
+### update users [GET/users/{id}/admin]
++ Headers
+    Content-Type: application/json
+    Authorization: JWT
+
++ Parameters 
+    + id: `1` (number,required) - The id of the user
+
++ Response 200 (application/json)
+    + Attributes
+        - include User
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
++ Response 401 (application/json)
+    + Attributes (Error)
+
++ Response 403 (application/json)
+    + Attributes (Error)
+
++ Response 404 (application/json)
+    + Attributes (Error)
+
+
 # Data structure
 
 ## Product (object)
@@ -211,5 +258,12 @@ Products is a simple API allowing users to manage the storing and inventory of p
 - quantity: `1` (number) - The quantity purchase
 - total: `1` (number) - The total of the purchase
 - logDate: `01-01-2018` (string) - the date of the purchase
+
+## User (object)
+- id: `1` (number) - The ID of the user
+- name: `1` (string) - The name of the user
+- password: `1` (string) - The password of the user
+- isAdmin: `1` (number) - Wether the user is admin (1) or not (0)
+
 
 
