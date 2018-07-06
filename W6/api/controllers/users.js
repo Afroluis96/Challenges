@@ -1,5 +1,5 @@
 const userModel = require('../models/users');
-const userRoleModel = require('../models/userRoles');
+const roleHelper = require('../helpers/role');
 
 const login = (req, res) => {
     
@@ -10,12 +10,21 @@ const signUp = (req, res) => {
     
   const { user, password } = req.body;
 
-  const newUser = new userModel({
-    userName: user,
-    password,
-
+  roleHelper.getRoleByName('Client')
+  .then(role =>{
+    //console.log(role._id);
+    return newUser = new userModel({
+        userName: user,
+        password,
+        userRoleId: role._id
+    });
+  }).then(user =>{
+      console.log("at leaste get here");
+      user.save();
+  }).catch(err => {
+      res.status(500).send({message:`Error when creating user ${err}`});
   })
-  res.send(user + password);
+  
 
 }
 

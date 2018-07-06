@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const { mongoose } = require('../bd/index');
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
-const roomSchema = Schema({
+const roomSchema = new Schema({
   roomName: String,
   capacity: Number,
   price: Number

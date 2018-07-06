@@ -2,11 +2,14 @@ require('dotenv').config('../.env');
 
 const mongoose = require('mongoose');
 
-const {DB_LINK} = process.env;
+const {dbLink} = process.env;
 
-mongoose.connect(DB_LINK, (err, res) => {
+mongoose.connect(dbLink, (err, res) => {
   if (err) {
       return console.log(`Error when trying to connect ${err}`);
   }
   console.log('Connection Stablished...');
 });
+ module.exports = {
+     mongoose
+ }

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const { mongoose } = require('../bd/index');
 
 const { Schema } = mongoose;
 

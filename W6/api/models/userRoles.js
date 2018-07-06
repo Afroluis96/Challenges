@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const { mongoose } = require('../bd/index');
+
+const { Schema } = mongoose;
 
 const userRoleSchema = new Schema({
     roleName: String

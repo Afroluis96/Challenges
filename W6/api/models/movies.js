@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const { mongoose } = require('../bd/index');
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
-const movieSchema = Schema({
+const movieSchema = new Schema({
   title: String,
   year: Date,
   rated: String,
@@ -15,7 +15,7 @@ const movieSchema = Schema({
   actors: String,
   plot: String,
   poster: String,
-  userRoleId: [{ type: Schema.Types.ObjectId, ref: 'userRoles' }],
+  imdbID: String
 });
 
 module.exports = mongoose.model('movies', movieSchema);
