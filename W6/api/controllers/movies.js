@@ -14,7 +14,7 @@ const findMovieApi = (req, res) => {
   console.log(url);  
   omdbService.searchMovieByUrl(url)
   .then((movie) => {
-  console.log(movie);
+  
       if (!movie) return Promise.reject(new Error('Movie Already Exists'));
       res.send(movie);
       
