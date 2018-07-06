@@ -1,5 +1,5 @@
 require('dotenv').config('../.env');
-
+//superSecret = applaudoStudios
 const { superSecret } = process.env;
 
 const authentication = (req, res, next) =>{
