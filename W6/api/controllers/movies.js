@@ -8,9 +8,10 @@ const { omdbToken } = process.env;
 
 const findMovieApi = (req, res) => {
   if (!req.params) return Promise.reject(new Error('Body not found'));
+  let page = (req.query.page !== undefined) ? Number(req.query.page) : 1;   
   const title = req.params.s;
   console.log('title', title);
-  const url = `${omdbLink}apikey=${omdbToken}&s=${title}`;
+  const url = `${omdbLink}apikey=${omdbToken}&s=${title}&page=${page}`;
   console.log(url);  
   omdbService.searchMovieByUrl(url)
   .then((movie) => {
@@ -33,7 +34,6 @@ const saveMovieApi = (req, res) => {
 
   return MovieModel.findOne({ imdbID })
     .then((movie) => {
-        console.log(movie);
       if (movie) return Promise.reject(new Error('Movie Already Exists'));
       return omdbService.searchMovieByUrl(url);
     })
@@ -60,10 +60,8 @@ const saveMovieApi = (req, res) => {
     .then((movie) => {
       if (!movie) Promise.reject(new Error('Error with the model'));
 
-      return movie.save((error, movieStored) => {
-        if (error) Promise.reject(new Error('Error when saving'));
-        return movieStored;
-      });
+      return movie.save();
+      
     })
     .then((saved) => {
       res.send(saved);
