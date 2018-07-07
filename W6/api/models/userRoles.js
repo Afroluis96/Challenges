@@ -2,8 +2,9 @@ const { mongoose } = require('../bd/index');
 
 const { Schema } = mongoose;
 
-const userRoleSchema = new Schema({
-    roleName: String,
+const roleSchema = new Schema({
+  roleName: String,
+  description: String
 });
 
-module.exports = mongoose.model('userRoles',userRoleSchema);
+module.exports = mongoose.model('userRoles', roleSchema);
