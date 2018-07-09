@@ -2,7 +2,7 @@ const roomModel = require('../models/rooms');
 const roleModel = require ('../models/userRoles');
 
 const addRoom = (req, res) =>{
-    //missing the auth validation
+    
   if(!req.body){
     res.status(404).send({message: "No body found"});
   }
@@ -24,7 +24,7 @@ const findRoom = (req,res) =>{
     //missing the auth validation
 
     roomModel.find({}, function(err, room){
-        if(err) console.log('error: ',err);
+        if(err) res.status(500).send({message:`Error shen trying to find ${err}`});
         res.send(room);
     });
    

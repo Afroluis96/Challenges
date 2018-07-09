@@ -5,6 +5,13 @@ const getRoleByName = (roleName) => {
    return roleModule.findOne({ roleName });
 }
 
+const getRoleById = (id) => {
+    console.log('rolename: ',id) 
+    return roleModule.findById({ id});
+ }
+ 
+
 module.exports = {
-    getRoleByName
+    getRoleByName,
+    getRoleById
 }

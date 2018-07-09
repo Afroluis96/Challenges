@@ -11,7 +11,7 @@ const login = (req, res) => {
   if (!req.body) res.status(400).send({ message: 'NO body found' });
   UserModel.findOne({
     userName: req.body.name,
-  })
+  }).populate('userRoleId')
     .then((user) => {
       if (!user) return Promise.reject(new Error('Error trying to finde user'));
       if (req.body.password !== user.password) return Promise.reject(new Error('Passwords do not match'));
@@ -19,8 +19,6 @@ const login = (req, res) => {
     })
     .then((token) => {
       res.send({
-        success: true,
-        message: 'Enjoy your token!',
         token,
       });
     })
@@ -30,21 +28,21 @@ const login = (req, res) => {
     });
 };
 
-const signUp = (req, res) => {
+const addUser = (req, res) => {
   if (!req.body) res.status(400).send({ message: 'NO body found' });
-  const { user, password } = req.body;
+  const { user, password, role } = req.body;
   return UserModel.findOne({ userName: user })
     .then((userOne) => {
       if (userOne) return Promise.reject(new Error('Username already exists'));
-      return roleHelper.getRoleByName('Client');
+      return roleHelper.getRoleByName(role);
     })
-    .then((role) => {
-      if (!role) return Promise.reject(new Error('Couldnt find the userRole'));
-      
+    .then((roleFound) => {
+      if (!roleFound) return Promise.reject(new Error('Couldnt find the userRole'));
+
       return newUser = new UserModel({
         userName: user,
         password,
-        userRoleId: role._id,
+        userRoleId: roleFound._id,
       }).save();
     })
     .then((saved) => {
@@ -61,6 +59,6 @@ const logout = (req, res) => {
 
 module.exports = {
   login,
-  signUp,
+  addUser,
   logout,
 };

@@ -16,6 +16,8 @@ const movieSchema = new Schema({
   plot: String,
   poster: String,
   imdbID: String
+},{
+  versionKey: false // You should be aware of the outcome after set to false
 });
 
 module.exports = mongoose.model('movies', movieSchema);

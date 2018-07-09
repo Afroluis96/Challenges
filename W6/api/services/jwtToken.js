@@ -1,16 +1,16 @@
-let jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
-const { superSecret } = process.env;
+const roleHelper = require('../helpers/role');
+
+const { superSecret, expirationTokenTime } = process.env; //28800
 
 
 const getToken = (user) =>{
     const payload = {
-        id: user._id 
+        id: user._id
       };
-      console.log(payload);
-
       return token = jwt.sign(payload, superSecret, {
-        expiresIn: 28800 // expires in 12 hours
+        expiresIn: Number(expirationTokenTime)
       });
 }
 

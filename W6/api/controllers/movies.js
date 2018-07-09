@@ -2,6 +2,8 @@ const MovieModel = require('../models/movies');
 
 const omdbService = require('../services/omdbapi');
 
+const moment = require('moment');
+
 const { omdbLink } = process.env;
 
 const { omdbToken } = process.env;
@@ -40,9 +42,10 @@ const saveMovieApi = (req, res) => {
     .then((oldbody) => {
       if (!oldbody) Promise.reject(new Error('Movie not found'));
       const body = JSON.parse(oldbody);
+      const yearFormated = moment(body.Year, 'YYYY');
       const movie = new MovieModel({
         title: body.Title,
-        year: body.Year,
+        year: yearFormated,
         rated: body.Rated,
         released: body.Released,
         runtime: body.Runtime,
