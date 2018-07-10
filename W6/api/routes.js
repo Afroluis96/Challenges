@@ -19,5 +19,7 @@ module.exports = (app) => {
     app.get('/omdbapi/movies/:s',movieController.findMovieApi);
     app.post('/omdbapi/movies',movieController.saveMovieApi);
 
+    app.get('/schedules/')
+
     app.post('/schedules',auth.authentication,scheduleController.addSchedule);
 }
