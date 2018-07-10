@@ -17,13 +17,20 @@ const verifyToken = (token) => new Promise ((resolve, reject)=>{
 });
 
 const verifyUser = (req, res, next) => {
-  const role = req.decode;
+  const role = req.decoded;
   console.log('role in veryfy: ',role);
   next();
 }
 
+const seeHeader = (req, res, next) =>{
+  let token = req.body.token || req.query.token || req.headers.authorization;
+  if(token)
+  return authentication(req, res, next)
+  next();
+}
+
 const authentication = (req, res, next) =>{
-    let token = req.body.token || req.query.token || req.headers.authorization;
+    
       verifyToken(token)
       .then((decoded) =>{
         
@@ -32,7 +39,7 @@ const authentication = (req, res, next) =>{
        next();
       })
       .catch(error =>{
-        res.status(400).send({message:'Invalid token provided'});
+        res.status(400).send({message:`Invalid token provided ${error}`});
       })
   
 }
@@ -40,5 +47,6 @@ const authentication = (req, res, next) =>{
 module.exports = {
     authentication,
     verifyToken,
-    verifyUser
+    verifyUser,
+    seeHeader
 };

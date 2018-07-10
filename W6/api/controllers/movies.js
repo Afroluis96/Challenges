@@ -43,7 +43,7 @@ const saveMovieApi = (req, res) => {
       if (!oldbody) Promise.reject(new Error('Movie not found'));
       const body = JSON.parse(oldbody);
       const yearFormated = moment(body.Year, 'YYYY');
-      const movie = new MovieModel({
+      return movie = new MovieModel({
         title: body.Title,
         year: yearFormated,
         rated: body.Rated,
@@ -56,14 +56,7 @@ const saveMovieApi = (req, res) => {
         plot: body.Plot,
         poster: body.Poster,
         imdbID: body.imdbID
-      });
-      
-      return movie;
-    })
-    .then((movie) => {
-      if (!movie) Promise.reject(new Error('Error with the model'));
-
-      return movie.save();
+      }).save();
       
     })
     .then((saved) => {
