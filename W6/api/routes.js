@@ -9,7 +9,7 @@ const scheduleController = require('./controllers/schedules');
 const auth = require('./middlewares/auth');
 
 module.exports = (app) => {
-    app.post('/users',auth.authentication,auth.verifyUser,userController.addUser);
+    app.post('/users',auth.seeHeader,auth.verifyUserCreation,userController.addUser);
     app.post('/login',userController.login);
     app.post('/logout',userController.logout);
 

@@ -14,7 +14,7 @@ const addRoom = (req, res) =>{
   });
   room.save((err, roomStore) =>{
       
-      if(err) res.status(500).send({message:`Error when savong the room ${err}`});
+      if(err) res.status(500).send({message:`Error when saving the room ${err}`});
 
       res.status(200).send({room: roomStore});
   })

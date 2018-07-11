@@ -4,6 +4,10 @@ const jwt = require('jsonwebtoken');
 
 const { superSecret } = process.env;
 
+const redis = require('redis');
+
+const client = require('../services/whiteList');
+
 const verifyToken = (token) => new Promise ((resolve, reject)=>{
   console.log('token:',token);
   jwt.verify(token,superSecret, function(err, decoded) {      
@@ -16,21 +20,25 @@ const verifyToken = (token) => new Promise ((resolve, reject)=>{
   });
 });
 
-const verifyUser = (req, res, next) => {
-  const role = req.decoded;
-  console.log('role in veryfy: ',role);
-  next();
+const verifyUserCreation = (req, res, next) => {
+  
+  const sessionRole = req.decoded.role;
+  const roleToCreate = req.body.role;
+  if(!sessionRole && roleToCreate !== 'Client') res.status(403).send({ message:'You are not allowed to create this kind of user'});
+
+  else if(sessionRole !== 'Administrator') res.status(403).send({ message:'You are not allowed to create users'});
+  
+  else next();
 }
 
 const seeHeader = (req, res, next) =>{
   let token = req.body.token || req.query.token || req.headers.authorization;
-  if(token)
-  return authentication(req, res, next)
+  if(token) return authentication(req, res, next, token);
   next();
 }
 
-const authentication = (req, res, next) =>{
-  let token = req.body.token || req.query.token || req.headers.authorization;
+const authentication = (req, res, next, token) =>{
+
       verifyToken(token)
       .then((decoded) =>{
         
@@ -47,6 +55,6 @@ const authentication = (req, res, next) =>{
 module.exports = {
     authentication,
     verifyToken,
-    verifyUser,
-    seeHeader
+    seeHeader,
+    verifyUserCreation
 };

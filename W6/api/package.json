@@ -18,6 +18,7 @@
     "mongodb": "^3.1.0",
     "mongoose": "^5.2.0",
     "nodemon": "^1.17.5",
+    "redis": "^2.8.0",
     "request": "^2.87.0"
   },
   "devDependencies": {
