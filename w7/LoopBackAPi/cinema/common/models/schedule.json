@@ -1,0 +1,61 @@
+{
+  "name": "schedule",
+  "plural": "schedules",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "price": {
+      "type": "number",
+      "required": false
+    },
+    "scheduleDate": {
+      "type": "date",
+      "required": true
+    },
+    "startTime": {
+      "type": "date",
+      "required": true
+    },
+    "endTime": {
+      "type": "date",
+      "required": true
+    },
+    "availableSeats": {
+      "type": "number",
+      "required": true
+    },
+    "movie": {
+      "type": "string",
+      "required": true
+    },
+    "room": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "movies": {
+      "type": "belongsTo",
+      "model": "movie",
+      "foreignKey": "movie"
+    },
+    "rooms": {
+      "type": "belongsTo",
+      "model": "room",
+      "foreignKey": "room"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
+  "methods": {}
+}

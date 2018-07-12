@@ -8,7 +8,8 @@ const { superSecret, expirationTokenTime } = process.env; //28800
 const getToken = (user) =>{
     const payload = {
         id: user._id,
-        role: user.userRoleId.roleName
+        role: user.userRoleId.roleName,
+        name: user.userName
       };
       return token = jwt.sign(payload, superSecret, {
         expiresIn: Number(expirationTokenTime)

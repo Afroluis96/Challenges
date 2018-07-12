@@ -6,23 +6,25 @@ const roleHelper = require('../helpers/role');
 
 const servicesToken = require('../services/jwtToken');
 
-const { clientList } = require('../services/whiteList');
-
+const  whiteListService  = require('../services/whiteList');
 
 const login = (req, res) => {
   if (!req.body) res.status(400).send({ message: 'NO body found' });
-  UserModel.findOne({
-    userName: req.body.name,
-  }).populate('userRoleId')
+  whiteListService.checkList(req.body.name)
+    .then((reply) => {
+      if (reply) { console.log(reply); return Promise.reject(new Error('Already Loged in')); }
+
+      return UserModel.findOne({
+        userName: req.body.name,
+      }).populate('userRoleId');
+    })
     .then((user) => {
-      if (!user) return Promise.reject(new Error('Error trying to finde user'));
+      if (!user) return Promise.reject(new Error('Error trying to find the user'));
       if (req.body.password !== user.password) return Promise.reject(new Error('Passwords do not match'));
       return servicesToken.getToken(user);
     })
     .then((token) => {
-      clientList.sadd(['activeUsers', token], function(err, reply){
-        console.log(reply);
-      })
+      whiteListService.addToWhiteList(req.body.name, token);
       res.send({
         token,
       });
@@ -36,7 +38,7 @@ const login = (req, res) => {
 const addUser = (req, res) => {
   if (!req.body) res.status(400).send({ message: 'NO body found' });
   const { user, password, role } = req.body;
-  
+
   UserModel.findOne({ userName: user })
     .then((userOne) => {
       if (userOne) return Promise.reject(new Error('Username already exists'));
@@ -54,13 +56,24 @@ const addUser = (req, res) => {
     .then((saved) => {
       res.send(saved);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({ message: `Error when creating user ${err.message}` });
     });
 };
 
 const logout = (req, res) => {
-  res.send('Entro');
+  whiteListService.checkList(req.body.name)
+    .then((reply) => {
+      if (!reply) return Promise.reject(new Error('This user it is not logged in'));
+
+      return clientList.del(req.body.name);
+    })
+    .then((reply, err) => {
+      if (err) return Promise.reject(new Error('Error when login out'));
+      res.status(200).send('User LogedOut');
+    }).catch((err) => {
+      res.status(500).send({ message: `Error when creating user ${err.message}` });
+    });
 };
 
 module.exports = {

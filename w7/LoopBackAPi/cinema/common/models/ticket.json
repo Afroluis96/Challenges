@@ -1,0 +1,42 @@
+{
+  "name": "ticket",
+  "plural": "tickets",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "quantity": {
+      "type": "number",
+      "required": true
+    },
+    "total": {
+      "type": "number",
+      "required": true
+    },
+    "schedule":{
+        "type":"string",
+        "required":true
+    },
+    "user":{
+        "type":"string",
+        "required":true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "schedules": {
+      "type": "belongsTo",
+      "model": "schedule",
+      "foreignKey": "schedule"
+    },
+    "users": {
+      "type": "belongsTo",
+      "model": "users",
+      "foreignKey": "user"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

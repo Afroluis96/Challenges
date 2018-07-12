@@ -50,6 +50,10 @@ const getToday = () =>{
   return moment().format('DD-MM-YYYY');
 }
 
+const getYear = (year) =>{
+  return moment(year,'YYYY');
+}
+
 module.exports = {
   setHour,
   validateDate,
@@ -61,5 +65,6 @@ module.exports = {
   setTimeToDate,
   getToday,
   addDays,
-  addDaysTime
+  addDaysTime,
+  getYear
 }

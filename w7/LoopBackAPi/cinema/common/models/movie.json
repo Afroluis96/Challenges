@@ -1,0 +1,66 @@
+{
+  "name": "movie",
+  "plural": "movies",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "year": {
+      "type": "date",
+      "required": true
+    },
+    "rated": {
+      "type": "string",
+      "required": true
+    },
+    "released": {
+      "type": "string",
+      "required": true
+    },
+    "runtime": {
+      "type": "string",
+      "required": true
+    },
+    "genre": {
+      "type": "string",
+      "required": true
+    },
+    "director": {
+      "type": "string",
+      "required": true
+    },
+    "writer": {
+      "type": "string",
+      "required": true
+    },
+    "actors": {
+      "type": "string",
+      "required": true
+    },
+    "plot": {
+      "type": "string",
+      "required": true
+    },
+    "poster": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
+  "methods": {}
+}

@@ -2,7 +2,9 @@ const MovieModel = require('../models/movies');
 
 const omdbService = require('../services/omdbapi');
 
-const moment = require('moment');
+const scheduleModel = require('../models/schedules');
+
+const dateHelper = require('../helpers/dateMoment');
 
 const { omdbLink } = process.env;
 
@@ -34,7 +36,7 @@ const saveMovieApi = (req, res) => {
   const { imdbID } = req.body;
   const url = `${omdbLink}apikey=${omdbToken}&i=${imdbID}`;
 
-  return MovieModel.findOne({ imdbID })
+   MovieModel.findOne({ imdbID })
     .then((movie) => {
       if (movie) return Promise.reject(new Error('Movie Already Exists'));
       return omdbService.searchMovieByUrl(url);
@@ -42,7 +44,7 @@ const saveMovieApi = (req, res) => {
     .then((oldbody) => {
       if (!oldbody) Promise.reject(new Error('Movie not found'));
       const body = JSON.parse(oldbody);
-      const yearFormated = moment(body.Year, 'YYYY');
+      const yearFormated = dateHelper.getYear(body.Year, 'YYYY');
       return movie = new MovieModel({
         title: body.Title,
         year: yearFormated,
@@ -68,7 +70,38 @@ const saveMovieApi = (req, res) => {
     });
 };
 
+const findMovieSchedules = (req, res) => {
+  
+  const today = dateHelper.getToday();  
+  const weekFromToday =  dateHelper.addDays(today, 7, 'days');
+
+  const todayFormated = dateHelper.setDate(today);
+  const weekFormated = dateHelper.setDate(weekFromToday);
+
+  const id = req.params.id;
+  let headSent = 0;
+  if(!id.match(/^[0-9a-fA-F]{24}$/)){
+    headSent = 1;
+    res.status(400).send({message:'Id not well formated'});
+  }
+  MovieModel.findById(id)
+  .then(movie =>{
+    if(!movie) return Promise.reject(new Error('Not movie Found'));
+    headSent = 0;
+    return  scheduleModel.find({ scheduleDate: { $gte: todayFormated, $lt: weekFormated } })
+  })
+ .then((billboard) => {
+   if(billboard.length === 0) res.send('The movie its not playing this week ')
+   else res.send(billboard);
+  }).catch((error) => {
+    if(headSent === 0)
+    res.status(500).send({ message: `Error finding the billboard to this movie: ${error} ` });
+  });
+
+}
+
 module.exports = {
   findMovieApi,
   saveMovieApi,
+  findMovieSchedules
 };

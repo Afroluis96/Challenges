@@ -9,6 +9,31 @@ clientList.on('connect', function() {
     console.log('connected redis');
 });
 
+const checkList = name => new Promise((resolve, reject) => {
+    clientList.get(name, (err, reply) =>{
+        console.log('check ',reply);
+    })
+    clientList.exists(name, (err, reply) => {
+      if (err) reject(err);
+      resolve(reply);
+    });
+  });
+
+const addToWhiteList = (name, token) => {
+  clientList.set(name, token);
+  
+  clientList.expire(name, 43200);
+}
+
+const deleteFromList = (name) => new Promise((resolve, reject) =>{
+    clientList.del(name, (err, reply) =>{
+        if(err) reject(err)
+        resolve(reply)
+    })
+})
 module.exports = { 
-    clientList
+    clientList,
+    checkList,
+    addToWhiteList,
+    deleteFromList
 }
