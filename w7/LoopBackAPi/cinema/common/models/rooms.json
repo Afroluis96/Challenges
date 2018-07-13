@@ -1,5 +1,5 @@
 {
-  "name": "room",
+  "name": "rooms",
   "plural": "rooms",
   "base": "PersistedModel",
   "idInjection": true,
@@ -27,7 +27,7 @@
       "accessType": "*",
       "principalType": "ROLE",
       "principalId": "$everyone",
-      "permission": "DENY"
+      "permission": "ALLOW"
     }
   ],
   "methods": {}

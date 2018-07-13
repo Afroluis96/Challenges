@@ -36,7 +36,27 @@
     "public": false
   },
   "users": {
-    "dataSource": "db",
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "userRoles": {
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "movies": {
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "rooms": {
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "schedules": {
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "tickets": {
+    "dataSource": "mongodb",
     "public": true
   }
 }

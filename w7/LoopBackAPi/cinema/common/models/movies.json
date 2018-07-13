@@ -1,5 +1,5 @@
 {
-  "name": "movie",
+  "name": "movies",
   "plural": "movies",
   "base": "PersistedModel",
   "idInjection": true,
@@ -59,8 +59,20 @@
       "accessType": "*",
       "principalType": "ROLE",
       "principalId": "$everyone",
-      "permission": "DENY"
+      "permission": "ALLOW"
     }
   ],
-  "methods": {}
+  "methods": {
+    "status":{
+       "returns":{
+         "arg":"status",
+         "type": "string"
+       },
+       "http":{
+         "verb":"get",
+         "path":"/status"
+       }
+
+    } 
+  }
 }

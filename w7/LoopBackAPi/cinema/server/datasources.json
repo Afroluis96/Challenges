@@ -2,5 +2,15 @@
   "db": {
     "name": "db",
     "connector": "memory"
+  },
+  "mongodb": {
+    "host": "ds125021.mlab.com",
+    "port": 25021,
+    "url": "mongodb://cinemaUser:cinema123@ds125021.mlab.com:25021/cinema",
+    "database": "cinema",
+    "password": "cinema123",
+    "name": "mongodb",
+    "user": "cinemaUser",
+    "connector": "mongodb"
   }
 }

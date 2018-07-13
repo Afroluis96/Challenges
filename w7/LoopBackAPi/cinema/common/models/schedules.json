@@ -1,5 +1,5 @@
 {
-  "name": "schedule",
+  "name": "schedules",
   "plural": "schedules",
   "base": "PersistedModel",
   "idInjection": true,
@@ -31,7 +31,7 @@
       "type": "string",
       "required": true
     },
-    "room": {
+    "roomId": {
       "type": "string",
       "required": true
     }
@@ -46,7 +46,7 @@
     "rooms": {
       "type": "belongsTo",
       "model": "room",
-      "foreignKey": "room"
+      "foreignKey": "roomId"
     }
   },
   "acls": [
