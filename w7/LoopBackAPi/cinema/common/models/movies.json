@@ -74,5 +74,18 @@
        }
 
     } 
+  },
+  "omdbapi":{
+    "description": "This will search the movies through th API",
+     "http":{
+       "verb":"get",
+       "path":"/omdbapi/:s"
+     },
+     "accepts":[
+       {"arg": "s", "type":"string", "required":true}
+     ],
+     "returns":{
+       "arg":
+     }
   }
 }

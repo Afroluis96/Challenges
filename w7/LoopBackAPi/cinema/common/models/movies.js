@@ -16,8 +16,10 @@ module.exports = function(Movies) {
         cb(null, response);
       };
 
-      Movies.omdbapi = () =>{
+      Movies.omdbapi =async (name) =>{
+        return MediaQueryList.s;
 
       }
+      
 
 };
